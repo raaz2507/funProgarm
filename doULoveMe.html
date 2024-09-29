@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>do u love me</title>
+    <style>
+        *{
+            padding:0;
+            margin:0;
+            box-sizing : borde-box;
+        }
+        body{
+            width:100vw;
+            height:100vh;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            background-color:rgb(213, 242, 253);
+        }
+        #contener{
+            margin: 1em;
+            padding: 1em;
+            width:70vh;
+            min-height:50vh;
+            border: .01px solid transparent;
+            text-align: center;
+            background-color:rgba(255, 192, 203, 0.658);
+            border-radius: 20px;
+            transition-duration: 2s;
+        }
+        #msg{
+            margin:1em;
+            color: rgb(255, 0, 0);
+        }
+        #eyeContener{
+            /* border: 2px red solid; */
+            width: 8em;
+            height: 8em;
+            border-radius:50%;
+            margin: 2em auto;
+            padding:1em;
+            /* justify-self:space-evenly; */
+            /* align-content: space-evenly; */
+        }
+        /*
+        #eyeContener:hover{
+            background-color:black;
+            color:white;
+            align-items:start;
+            /* justify-content:; */
+        }
+        */
+        #eye{position:relative;
+            color:red;
+        
+        }
+        .eyeBoll{
+            width:1em;
+            height:1em;
+            border-radius:50%;
+            margin:.5em;
+            background-color:rgb(107, 211, 255);
+            display:inline-block;
+            font-size:1em;
+            color:white;
+        }
+        button{
+            padding:.5em;
+            margin: .5em;
+            font-size:15px;
+            border: none;
+            border-radius: 5px;
+        }
+        #yes{
+            background-color :rgb(181, 252, 181);
+        }
+        #no{
+            background-color :rgb(252, 93, 93);
+            position :absolute;
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="contener">
+        <h1 id="msg">Do you love Me ?</h1>
+        <div id="eyeContener">
+            <div id="eye">
+                <!-- &#10084;&#10084; -->
+                <div class="eyeBoll">.</div>
+                <div class="eyeBoll">.</div>    
+            </div>
+        </div>
+        <button id="yes" value="yes">Yes</button>
+        <button id="no" value="no">No</button>
+    </div>
+    <script>
+        let msg = document.getElementById('msg');
+        let yes= document.getElementById('yes');
+        yes.addEventListener('click', ()=>{
+            msg.innerText = `I L♥ve U TOO...\n meri jaan`;
+            no.remove();
+            yes.remove();
+            // contStyle();
+        });
+        
+        const container = document.getElementById('contener');
+        const containerRect = container.getBoundingClientRect();
+        
+        let no=document.getElementById('no');
+        no.addEventListener('mouseenter', () => {    
+            const buttonRect = no.getBoundingClientRect();
+            // Set the new position
+            no.style.left = `${randomGen(containerRect.right-buttonRect.width, containerRect.left+buttonRect.width )}px`;
+            no.style.top = `${randomGen(containerRect.bottom-buttonRect.height, containerRect.top+buttonRect.height )}px`;
+        });
+/*
+        document.addEventListener('mousemove', (event)=>{
+            const eyeBox=document.getElementById('eyeContener');
+            const eyeReat=eyeBox.getBoundingClientRect();
+            const eyeBoll =document.getElementById('eye');
+            const eyeBoxReat = eyeBox.getBoundingClientRect();
+            // console.log('x:',event.clientX);
+            // console.log('y',event.clientY);
+            eye.style.left=`${event.clientX*(eyeBoxReat.bottom-eyeBoxReat.top)+eyeReat.width}px`;
+            eye.style.top=`${event.clientY*(eyeBoxReat.right-eyeBoxReat.left)+eyeReat.height}px`;
+            console.log('r');
+        });
+*/
+        document.addEventListener('mousemove', (event) => {
+            const eyeContener = document.getElementById('eyeContener');
+            const eyeContenerRect = eyeContener.getBoundingClientRect();
+            const eyeCenterX = eyeContenerRect.left + eyeContenerRect.width / 2;
+            const eyeCenterY = eyeContenerRect.top + eyeContenerRect.height / 2;
+            const deltaX = event.clientX - eyeCenterX;
+            const deltaY = event.clientY - eyeCenterY;
+            const angle = Math.atan2(deltaY, deltaX);
+            const distance = Math.min(50, Math.sqrt(deltaX * deltaX + deltaY * deltaY)); // Limit movement
+            const eyeBoll = document.getElementById('eye');
+            // Move the eye based on calculated angle and distance
+            eyeBoll.style.transform = `translate(${distance * Math.cos(angle)}px, ${distance * Math.sin(angle)}px)`;
+        });
+        
+
+        function randomGen(max, min){
+            return Math.random()*(max-min+1)+min;
+        }
+        function contStyle(){
+            container.style.display="flex";
+            container.style.alignItems="center";
+            container.style.justifyContent="center";
+            container.style.flexDirection='column';
+        }
+    </script>
+</body>
+</html>
